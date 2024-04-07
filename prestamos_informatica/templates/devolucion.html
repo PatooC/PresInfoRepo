@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devolución</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img style="height: 60px; width: 60px;" src="/static/Logo_GORE_-_PNG.png" alt="Logo" class="rounded"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-white">≡</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/prestamo">Préstamo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/devolucion">Devolución</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Equipos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/agregar">Agregar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/borrar">Borrar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/mantenimiento">Mantenimiento </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/modFun">Modificar Funcionario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vista de Datos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Funcionarios">Funcionarios</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Historial">Historial de Préstamos</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Notebooks">Notebooks</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Proyectores">Proyectores</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+    </nav>
+    <div class="container ">
+        <div class="row ">
+            <div class="col-md-6">
+                <h2 class="text-center">Devolución de Notebooks</h2>
+                <br>
+                <form method="POST" action="">
+                    {{ formDevoNote.hidden_tag() }}
+                    <p>
+                        <label for="equipoid">Código del Equipo:</label>
+                        {{ formDevoNote.devo_equipoidNote() }}
+                    </p>
+                    <p>
+                        <label for="devolucion">Fecha de Devolución:</label>
+                        {{ formDevoNote.devo_fechaNote() }}
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formDevoNote.devo_submitNote(class="btn btn-outline-secondary") }}
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Devolución de Proyectores</h2>
+                <br>
+                <form method="POST" action="">
+                    {{ formDevoProye.hidden_tag() }}
+                    <p>
+                        <label for="equipoid">Código del Equipo:</label>
+                        {{ formDevoProye.devo_equipoidProye() }}
+                    </p>
+                    <p>
+                        <label for="devolucion">Fecha de Devolución:</label>
+                        {{ formDevoProye.devo_fechaProye() }}
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formDevoProye.devo_submitProye(class="btn btn-outline-secondary") }}
+                        </p>
+                    </div>
+                </form>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div style="color: red;">{{ message }}</div> 
+                        {% else %}
+                            <div>{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %} 
+            <h2 class="text-center">Prestamos Activos</h2>
+            <div class="container">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">Codigo Funcionario</th>
+                                <th scope="col">Nombre Funcionario</th>
+                                <th scope="col">Equipo ID</th>
+                                <th scope="col">Entrega</th>
+                                <th scope="col">Estimada</th>
+                                <th scope="col">Devolución</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for dato in datos %}
+                            <tr>
+                                <td>{{ dato[0] }}</td>
+                                <td>{{ dato[5] }}</td>
+                                <td>{{ dato[1] }}</td>
+                                <td>{{ dato[2] }}</td>
+                                <td>{{ dato[3] }}</td>
+                                <td>{{ "Sí" if dato[4] else "No Devuelto" }}</td>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Obtener el campo de fecha
+        const fecha_Note = document.getElementById('devo_fechaNote');
+        const fecha_Proye = document.getElementById('devo_fechaProye')
+    
+        // Obtener la fecha actual
+        const today = new Date();
+        const yyyy = today.getFullYear();
+        const mm = String(today.getMonth() + 1).padStart(2, '0'); // Enero es 0
+        const dd = String(today.getDate()).padStart(2, '0');
+        const fechaActual = yyyy + '-' + mm + '-' + dd;
+    
+        // Establecer la fecha mínima en el campo de fecha
+        fecha_Note.setAttribute('min', fechaActual);
+        fecha_Proye.setAttribute('min', fechaActual);
+    </script>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
+</body>
+</html> 

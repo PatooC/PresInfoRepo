@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img style="height: 60px; width: 60px;" src="/static/Logo_GORE_-_PNG.png" alt="Logo" class="rounded"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-white">≡</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/prestamo">Préstamo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/devolucion">Devolución</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Equipos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/agregar">Agregar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/borrar">Borrar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/mantenimiento">Mantenimiento </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/modFun">Modificar Funcionario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vista de Datos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Funcionarios">Funcionarios</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Historial">Historial de Préstamos</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Notebooks">Notebooks</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Proyectores">Proyectores</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+    </nav>
+    <div class="container ">
+        <div class="row ">
+            <div class="col-md-6">
+                <h2 class="text-center">Agregar Funcionario</h2>
+                <br>
+                <form method="POST" action="">
+                    {{ formAgFun.csrf_token }}
+                    <p>
+                        <label for="codfunOpUno">Código de Funcionario:</label>
+                        {{ formAgFun.agfun_codfun }} 
+                    </p>
+                    <p>
+                        <label for="nombreOpUno">Nombre:</label>
+                        {{ formAgFun.agfun_nombre }} 
+                    </p>
+                    <p>
+                        <div class="input-group mb-3">
+                            <label for="correoOpUno">Correo: </label>
+                            {{ formAgFun.agfun_correo(class="") }}
+                            <span class="input-group-text" id="basic-addon2">@gorearaucania.cl</span>
+                        </div>
+                    </p>
+                    <p>
+                        <label for="rutOpUno">RUT:</label>
+                        {{ formAgFun.agfun_rut }} 
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formAgFun.agfun_submitFun(class="btn btn-outline-secondary") }} 
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Borrar Funcionario</h2>
+                <br>
+                <form method="POST">
+                    {{ formBrFun.csrf_token }}
+                    <p>
+                        <label for="codfunOpDos">Código de Funcionario:</label>
+                        {{ formBrFun.brfun_codfun }} 
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formBrFun.brfun_submitFun(class="btn btn-outline-secondary") }} 
+                        </p>
+                    </div>
+                </form>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div style="color: red;">{{ message }}</div> 
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}          
+        </div>
+    </div>
+    </div>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
+</body>
+</html>

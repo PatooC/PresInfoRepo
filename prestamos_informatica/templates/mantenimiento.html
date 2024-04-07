@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mantenimiento</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img style="height: 60px; width: 60px;" src="/static/Logo_GORE_-_PNG.png" alt="Logo" class="rounded"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-white">≡</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/prestamo">Préstamo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/devolucion">Devolución</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Equipos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/agregar">Agregar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/borrar">Borrar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/mantenimiento">Mantenimiento </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/modFun">Modificar Funcionario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vista de Datos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Funcionarios">Funcionarios</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Historial">Historial de Préstamos</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Notebooks">Notebooks</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Proyectores">Proyectores</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+    </nav>
+    <div class="container ">
+        <div class="row ">
+            <div class="col-md-6">
+                <h2 class="text-center">Mantenimiento Notebook</h2>
+                <br>
+                <form method="POST" action="">
+                    {{ formMntNote.csrf_token }}
+                    <p>
+                        <label for="equipoidNote">Código del Equipo:</label>
+                        {{ formMntNote.mnt_equipoidNote }}
+                    </p>
+                    <p>
+                        <label for="bolsoNote">Bolso de Transporte:</label>
+                        {{ formMntNote.mnt_bolsoNote }}
+                    </p>
+                    <p>
+                        <label for="estadoNote">Estado del Equipo:</label>
+                        {{ formMntNote.mnt_estadoNote }}
+                    </p>
+                    <p>
+                        <label for="cargador">¿Tiene Cargador?</label>
+                        {{ formMntNote.mnt_cargador }}
+                    </p>
+                    <p>
+                        <label for="mouse">¿Tiene Mouse?</label>
+                        {{ formMntNote.mnt_mouse }}
+                    </p>
+                    <p>
+                        <label for="mantenimientoNote">Fecha del último mantenimiento:</label>
+                        {{ formMntNote.mnt_mantenimientoNote }}
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formMntNote.mnt_submitNote(class="btn btn-outline-secondary") }}
+                        </p>
+                    </div>
+                </form>
+                <br>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == 'notebook_error' %}
+                                <div style="color: red;">{{ message }}</div> 
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <h3 class="text-center">Notebooks</h3>
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Estado</th>
+                                    <th>Mantenimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dato in datos_note %}
+                                <tr>
+                                    <td>{{ dato[0] }}</td>
+                                    <td>{{ "Operativo" if dato[3] else "No Operativo" }}</td>
+                                    <td>{{ dato[4] }}</td>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Mantenimiento Proyector</h2>
+                <br>
+                <form method="POST">
+                    {{ formMntProye.csrf_token }}
+                    <p>
+                        <label for="equipoidProye">Serie del Equipo:</label>
+                        {{ formMntProye.mnt_equipoidProye }}
+                    </p>
+                    <p>
+                        <label for="bolsoProye">Bolso de Transporte:</label>
+                        {{ formMntProye.mnt_bolsoProye }}
+                    </p>
+                    <p>
+                        <label for="estadoProye">Estado del Equipo:</label>
+                        {{ formMntProye.mnt_estadoProye }}
+                    </p>
+                    <p>
+                        <label for="alimentacion">¿Tiene Cable de Alimentación?</label>
+                        {{ formMntProye.mnt_alimentacion }}
+                    </p>
+                    <p>
+                        <label for="hdmi">¿Tiene Cable HDMI?</label>
+                        {{ formMntProye.mnt_hdmi }}
+                    </p>
+                    <p>
+                        <label for="vga">¿Tiene Cable VGA?</label>
+                        {{ formMntProye.mnt_vga }}
+                    </p>
+                    <p>
+                        <label for="mantenimientoProye">Fecha del último mantenimiento:</label>
+                        {{ formMntProye.mnt_mantenimientoProye }}
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formMntProye.mnt_submitProye(class="btn btn-outline-secondary") }}
+                        </p>
+                    </div>
+                </form>
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                    {% if messages %}
+                        {% for category, message in messages %}
+                            {% if category == 'proyector_error' %}
+                                <div style="color: red;">{{ message }}</div> 
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+                <h3 class="text-center">Proyectores</h3>
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Serie</th>
+                                    <th>Estado</th>
+                                    <th>Mantenimiento</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for dato in datos_proye %}
+                                <tr>
+                                    <td>{{ dato[0] }}</td>
+                                    <td>{{ "Operativo" if dato[1] else "No Operativo" }}</td>
+                                    <td>{{ dato[2] }}</td>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
+</body>
+</html>

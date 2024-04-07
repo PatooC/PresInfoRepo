@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Equipo</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap/css/bootstrap.min.css') }}">
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/"><img style="height: 60px; width: 60px;" src="/static/Logo_GORE_-_PNG.png" alt="Logo" class="rounded"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon text-white">≡</span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/prestamo">Préstamo</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/devolucion">Devolución</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Equipos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/agregar">Agregar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/borrar">Borrar </a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/mantenimiento">Mantenimiento </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active text-white" href="/modFun">Modificar Funcionario</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            Vista de Datos
+                        </a>
+                        <ul class="dropdown-menu bg-dark">
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Funcionarios">Funcionarios</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Historial">Historial de Préstamos</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Notebooks">Notebooks</a>
+                            </li>
+                            <li>
+                                <a class="nav-link active text-white" href="/Vista-Proyectores">Proyectores</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>  
+        </div>
+    </nav>
+    <div class="container ">
+        <div class="row ">
+            <div class="col-md-6">
+                <h2 class="text-center">Agregar Notebook</h2>
+                <br>
+                <form method="POST" action="">
+                    {{ formAgNote.csrf_token }}
+                    <p>
+                        <label for="equipoidNote">Código del Equipo:</label>
+                        {{ formAgNote.ag_equipoidNote }}
+                    </p>
+                    <p>
+                        <label for="bolsoNote">Bolso de Transporte:</label>
+                        {{ formAgNote.ag_bolsoNote }}
+                    </p>
+                    <p>
+                        <label for="estadoNote">Estado del Equipo:</label>
+                        {{ formAgNote.ag_estadoNote }}
+                    </p>
+                    <p>
+                        <label for="cargador">¿Tiene Cargador?</label>
+                        {{ formAgNote.ag_cargador }}
+                    </p>
+                    <p>
+                        <label for="mouse">¿Tiene Mouse?</label>
+                        {{ formAgNote.ag_mouse }}
+                    </p>
+                    <p>
+                        <label for="modeloNote">Modelo del Equipo:</label>
+                        {{ formAgNote.ag_modeloNote }}
+                    </p>
+                    <p>
+                        <label for="marcaNote">Marca del Equipo:</label>
+                        {{ formAgNote.ag_marcaNote }}
+                    </p>
+                    <p>
+                        <label for="ag_serieNote">Serie del Equipo:</label>
+                        {{ formAgNote.ag_serieNote }}
+                    </p>
+                    <p>
+                        <label for="mantenimientoNote">Fecha del último mantenimiento:</label>
+                        {{ formAgNote.ag_mantenimientoNote }}
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formAgNote.ag_submitNote(class="btn btn-outline-secondary") }}
+                        </p>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-6">
+                <h2 class="text-center">Agregar Proyector</h2>
+                <br>
+                <form method="POST">
+                    {{ formAgProye.csrf_token }}
+                    <p>
+                        <label for="equipoidProye">Serie del Equipo:</label>
+                        {{ formAgProye.ag_equipoidProye }}
+                    </p>
+                    <p>
+                        <label for="bolsoProye">Bolso de Transporte:</label>
+                        {{ formAgProye.ag_bolsoProye }}
+                    </p>
+                    <p>
+                        <label for="estadoProye">Estado del Equipo:</label>
+                        {{ formAgProye.ag_estadoProye }}
+                    </p>
+                    <p>
+                        <label for="alimentacion">¿Tiene Cable de Alimentación?</label>
+                        {{ formAgProye.ag_alimentacion }}
+                    </p>
+                    <p>
+                        <label for="hdmi">¿Tiene Cable HDMI?</label>
+                        {{ formAgProye.ag_hdmi }}
+                    </p>
+                    <p>
+                        <label for="vga">¿Tiene Cable VGA?</label>
+                        {{ formAgProye.ag_vga }}
+                    </p>
+                    <p>
+                        <label for="modeloProye">Modelo del Equipo:</label>
+                        {{ formAgProye.ag_modeloProye }}
+                    </p>
+                    <p>
+                        <label for="marcaProye">Marca del Equipo:</label>
+                        {{ formAgProye.ag_marcaProye }}
+                    </p>
+                    <p>
+                        <label for="mantenimientoProye">Fecha del último mantenimiento:</label>
+                        {{ formAgProye.ag_mantenimientoProye }}
+                    </p>
+                    <div class="text-center">
+                        <p>
+                            {{ formAgProye.ag_submitProye(class="btn btn-outline-secondary") }}
+                        </p>
+                    </div>
+                </form>
+            </div>
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        {% if category == 'error' %}
+                            <div style="color: red;">{{ message }}</div> 
+                        {% else %}
+                            <div>{{ message }}</div>
+                        {% endif %}
+                    {% endfor %}
+                {% endif %}
+            {% endwith %} 
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/popper.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='bootstrap/js/jquery.min.js') }}"></script>
+</body>
+</html>
